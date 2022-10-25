@@ -38,9 +38,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        binding.importBtn.setOnClickListener(v -> importPatch());
-        binding.exportBtn.setOnClickListener(v -> shareCommon());
+        binding.importBtn.setOnClickListener(v -> importFiles());
+        binding.exportBtn.setOnClickListener(v -> exportFiles());
 
+        //init file to export
         SHARE_FOLDER = getFilesDir().getPath() + "/share/";
         dirChecker(SHARE_FOLDER);
 
@@ -59,7 +60,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void importPatch() {
+    //-------------------------------------------------------------------- IMPORT
+    /**
+     * import from File Manager
+     */
+    public void importFiles() {
         Intent pickIntent = new Intent(Intent.ACTION_GET_CONTENT);
         // pickIntent.setType("application/octet-stream");
         pickIntent.setType("*/*");
@@ -69,6 +74,9 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(pickIntent, "Open with ..."), IMPORT_FILE);
     }
 
+    /**
+     * result of: importPatch() func
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -141,7 +149,8 @@ public class MainActivity extends AppCompatActivity {
         return result;
     }
 
-    public void shareCommon() {
+    //-------------------------------------------------------------------- EXPORT
+    public void exportFiles() {
         File scanFile = new File(SHARE_FOLDER);
         ArrayList<Uri> uriArr = new ArrayList<>();
 
